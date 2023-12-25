@@ -20,7 +20,6 @@ const View = () => {
     const [data, setData] = useState([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const { singleUserData, setsingleUserData } = useContext(Context)
     const { userId, setUserId } = useContext(Context)
 
     const navigate = useNavigate();

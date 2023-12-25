@@ -19,6 +19,7 @@ const SingleUserView = () => {
     const [open, setOpen] = useState(false);
     const [alertOpen, setAlertOpen] = useState(false);
 
+
     const handleClickOpen = async() => {
         await setsingleUserData(data)
             setOpen(true);
@@ -36,9 +37,11 @@ const SingleUserView = () => {
     };
 
 
-    const handleDelete = () => {
-        const response = axios.delete(`https://658939e7324d417152589bdb.mockapi.io/users/users/${data.id}`)
+    const handleDelete = async() => {
+        const response = await axios.delete(`https://658939e7324d417152589bdb.mockapi.io/users/users/${data.id}`)
+        
         if (response) {
+            console.log(response)
             navigate("/");
         }
     }
