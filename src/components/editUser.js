@@ -1,16 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState,useContext } from 'react'
 import Dialog from '@mui/material/Dialog';
 import axios from 'axios';
 import { Button, TextField,MenuItem,FormControl, InputLabel, Select   } from '@mui/material';
+import Context from "../components/context"
 
 const EditUser = ({open,handleClose, setData, data})=>{
     
+  const { singleUserData, setsingleUserData } = useContext(Context)
+  // console.log('singleUserData', singleUserData)
+
+
     const [formData, setFormData] = useState({
-        name: data.name,
-        email: data.email,
-        userName: data.userName,
-        role: data.role,
+        name: singleUserData.name, 
+        email: singleUserData.email,
+        userName: singleUserData.userName,
+        role: singleUserData.role,
       });
+      
+      useEffect(() => {
+        setFormData(singleUserData);
+      }, [singleUserData]);
 
       const [errors, setErrors] = useState({
         name: false,

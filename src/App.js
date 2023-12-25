@@ -21,7 +21,7 @@ const router = createBrowserRouter([
 
 function App() {
   const [userId, setUserId] = useState(null);
-  const [singleUserData, setsingleUserData] = useState([]);
+  const [singleUserData, setsingleUserData] = useState(null);
   return (
     <div>
       <Context.Provider value={{userId, setUserId,singleUserData, setsingleUserData}}>

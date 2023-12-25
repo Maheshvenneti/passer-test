@@ -4,7 +4,8 @@ import "../components/styles/singleUser.css"
 import Context from "../components/context"
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import EditUser from "../components/editUser"
+import EditUser from "../components/editUser";
+import DeleteAlert from "../components/deleteAlert";
 
 
 
@@ -16,18 +17,27 @@ const SingleUserView = () => {
     const navigate = useNavigate();
     const { userId, setUserId } = useContext(Context)
     const [open, setOpen] = useState(false);
+    const [alertOpen, setAlertOpen] = useState(false);
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const handleClickOpen = async() => {
+        await setsingleUserData(data)
+            setOpen(true);
+       
+    };
+    const handleAlertClickOpen = () => {
+        setAlertOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
     };
+    const handleAlertClose = () => {
+        setAlertOpen(false);
+    };
 
 
-    const handleDelete = (userId) => {
-        const response = axios.delete(`https://658939e7324d417152589bdb.mockapi.io/users/users/${userId}`)
+    const handleDelete = () => {
+        const response = axios.delete(`https://658939e7324d417152589bdb.mockapi.io/users/users/${data.id}`)
         if (response) {
             navigate("/");
         }
@@ -36,6 +46,7 @@ const SingleUserView = () => {
         axios.get(`https://658939e7324d417152589bdb.mockapi.io/users/users/${userId}`)
             .then((response) => {
                 setData(response.data);
+                
             })
             .catch((error) => {
                 console.error('Error:', error);
@@ -62,14 +73,17 @@ const SingleUserView = () => {
                                 <h3>{data?.userName}</h3>
                                 <div className='actions'>
                                     <Button variant="outlined" onClick={handleClickOpen}>Edit</Button>
-                                    <Button variant="outlined" onClick={() => handleDelete(data.id)} color="error">Delete</Button>
+                                    <Button variant="outlined" onClick={handleAlertClickOpen} color="error">Delete</Button>
                                 </div>
                             </Grid>
                         </Grid>
                     </Card>
                 </div>
             </div>
-            <EditUser open={open} setData={setData} data={data} handleClose={handleClose}/>
+            {
+            singleUserData?<EditUser open={open} setData={setData} data={data} handleClose={handleClose}/>:''
+            }
+            <DeleteAlert alertOpen={alertOpen} handleDelete={handleDelete} handleAlertClickOpen={handleAlertClickOpen} handleAlertClose={handleAlertClose}/>
         </>
 
     )
